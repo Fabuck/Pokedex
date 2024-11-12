@@ -1,0 +1,147 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2d2d2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.pokemon-card {
+  width: 300px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  background-color: #e0e0e0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.pokemon-name {
+  font-size: 1.5em;
+}
+
+.pokemon-number {
+  font-size: 1em;
+}
+
+.pokemon-image {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+}
+
+.pokemon-image img {
+  width: 100%;
+  max-width: 180px;
+  opacity: 0.3;
+}
+
+.types {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.type {
+  background-color: #6c6c6c;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+}
+
+.about {
+  padding: 15px;
+}
+
+.about h2 {
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #6c6c6c;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.detail {
+  text-align: center;
+}
+
+.detail span {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.detail p {
+  font-size: 0.8em;
+  color: #6c6c6c;
+}
+
+.description {
+  font-size: 0.8em;
+  color: #6c6c6c;
+  text-align: center;
+}
+
+.base-stats {
+  padding: 15px;
+}
+
+.base-stats h2 {
+  font-size: 1.2em;
+  text-align: center;
+  color: #6c6c6c;
+  margin-bottom: 10px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.stat span {
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.bar {
+  background-color: #e0e0e0;
+  width: 100px;
+  height: 8px;
+  border-radius: 5px;
+  margin: 0 10px;
+  overflow: hidden;
+}
+
+.fill {
+  background-color: #6c6c6c;
+  height: 100%;
+  width: 50%; /* adjust this based on the stat value */
+}
+
+.abilities {
+  display: flex;
+  flex-direction: column;
+}
