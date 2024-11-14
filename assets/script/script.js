@@ -11,27 +11,32 @@ const pokemonAbilitieDeux = document.querySelector(".abilities .deux");
 const pokemonDescription = document.querySelector(".description");
 const fillBar = document.querySelectorAll(".fill");
 const statValue = document.querySelectorAll(".stat-value ");
-const header = document.querySelector('header')
-const statName = document.querySelectorAll('.statName')
+const header = document.querySelector(".header");
+const statName = document.querySelectorAll(".statName");
+const inputName = document.querySelector("#inputName");
+const btn = document.querySelector("button");
+const clue = document.querySelector(".indice div");
+const pokemonCard = document.querySelector('.pokemon-card')
+let cris;
 const colours = {
-	normal: '#A8A77A',
-	fire: '#EE8130',
-	water: '#6390F0',
-	electric: '#F7D02C',
-	grass: '#7AC74C',
-	ice: '#96D9D6',
-	fighting: '#C22E28',
-	poison: '#A33EA1',
-	ground: '#E2BF65',
-	flying: '#A98FF3',
-	psychic: '#F95587',
-	bug: '#A6B91A',
-	rock: '#B6A136',
-	ghost: '#735797',
-	dragon: '#6F35FC',
-	dark: '#705746',
-	steel: '#B7B7CE',
-	fairy: '#D685AD',
+  normal: "#A8A77A",
+  fire: "#EE8130",
+  water: "#6390F0",
+  electric: "#F7D02C",
+  grass: "#7AC74C",
+  ice: "#96D9D6",
+  fighting: "#C22E28",
+  poison: "#A33EA1",
+  ground: "#E2BF65",
+  flying: "#A98FF3",
+  psychic: "#F95587",
+  bug: "#A6B91A",
+  rock: "#B6A136",
+  ghost: "#735797",
+  dragon: "#6F35FC",
+  dark: "#705746",
+  steel: "#B7B7CE",
+  fairy: "#D685AD",
 };
 
 async function getData(pokemonName) {
@@ -39,6 +44,7 @@ async function getData(pokemonName) {
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
     );
+
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -62,6 +68,7 @@ async function getDdescription(pokemonName) {
     }
 
     const description = await response.json();
+    console.log(description);
 
     return description;
   } catch (error) {
@@ -71,23 +78,26 @@ async function getDdescription(pokemonName) {
 
 async function pokemonDisplay(pokemonName) {
   const json = await getData(pokemonName);
+
   const description = await getDdescription(pokemonName);
   let stat = [];
-  let { name, id, types, weight, height, stats, abilities, sprites } = json;
+  let { name, id, types, weight, height, stats, abilities, sprites, cries } =
+    json;
   stats.forEach((element) => {
     stat.push(element.base_stat);
   });
-  function color(col){
-    header.style.backgroundColor = col
-    statName.forEach(element => {
-      element.style.color = col
-      pokemonTypesUn.style.backgroundColor = col
-      pokemonTypesDeux.style.backgroundColor = colours[types[1]?.type?.name] || ""
-      
+  function color(col) {
+    header.style.backgroundColor = col;
+    statName.forEach((element) => {
+      element.style.color = col;
+      pokemonTypesUn.style.backgroundColor = col;
+      pokemonTypesDeux.style.backgroundColor =
+        colours[types[1]?.type?.name] || "";
     });
   }
 
   pokemonNames.textContent = name;
+  clue.textContent = name;
   pokemonId.textContent = id;
   pokemonTypesUn.textContent = types[0].type.name;
   pokemonTypesDeux.textContent = types[1]?.type?.name || "";
@@ -96,15 +106,17 @@ async function pokemonDisplay(pokemonName) {
   pokemonHeight.textContent = `${height} m`;
   pokemonAbilitieUn.textContent = abilities[0].ability.name;
   pokemonAbilitieDeux.textContent = abilities[1]?.ability?.name;
-  pokemonDescription.textContent =
+  if(pokemonTypesDeux.textContent === ""){
+    pokemonTypesDeux.style.display = 'none'
+  }
+  pokemonDescription.innerHTML =
     description.flavor_text_entries[0].flavor_text;
-   
+  cris = new Audio(json.cries.latest);
 
-    
   fillBar.forEach((element) => {
     let index = 0;
     element.style.width = `${(stat[index] / 250) * 100}%`;
-    element.style.backgroundColor = colours[types[0].type.name]
+    element.style.backgroundColor = colours[types[0].type.name];
     index++;
   });
 
@@ -113,8 +125,30 @@ async function pokemonDisplay(pokemonName) {
     element.textContent = `${stat[index]}`;
     index++;
   });
-  color(colours[types[0].type.name])
-  console.log(colours[types[0].type.name]);
+  color(colours[types[0].type.name]);
+
+  document.querySelector(".test").addEventListener("click", () => {
+    checkWin();
+  });
 }
 
-pokemonDisplay("mewtwo");
+function checkWin() {
+  if (pokemonNames.textContent === inputName.value) {
+    clue.classList.add("hidden");
+    cris.play();
+    pokemonDisplay(Math.floor(Math.random() * 151) + 1);
+    inputName.value = "";
+return
+  } else  {
+    pokemonCard.classList.add('shake')
+    setTimeout(()=>{pokemonCard.classList.remove('shake')},500)
+    
+  }
+}
+
+function indice() {
+  clue.classList.toggle("hidden");
+}
+
+pokemonDisplay(Math.floor(Math.random() * 1025) + 1);
+
